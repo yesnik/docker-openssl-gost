@@ -1,6 +1,6 @@
-# Docker image with php-fpm built with OpenSSL 1.1.0, cURL, GOST-engine
+# PHP-FPM Docker image built with OpenSSL 1.1.0, cURL, GOST-engine
 
-This image contains php which knows GOST-algorithms:
+This image contains PHP that supports GOST-algorithms:
 ```
 php -r "echo openssl_digest('Hello', 'GOST R 34.11-2012 with 256 bit hash');"
 3c10d2ffe0787bc8bd6eacd337d59c314ce689c847a422f6c34b4b75f45751bc
@@ -52,13 +52,12 @@ https://hub.docker.com/r/rnix/php-fpm-gost/
 
 `docker run rnix/php-fpm-gost php -i`
 
-
 ## How image was built
 
 Compiled versions of OpenSSL, cURL with GOST-engine were taken from image `rnix/openssl-gost`
 using multi-stage building. Then PHP was compiled with them.
 
-Script `make_dockerfile.sh` does some changes to [official image](https://github.com/docker-library/php/tree/master/7.1/jessie/fpm).
+Script `make_dockerfile.sh` does some changes to official image.
 The result of it is included in this folder.
 
 ## Limitations

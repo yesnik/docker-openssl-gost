@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOCKER_BASE_URL="https://raw.githubusercontent.com/docker-library/php/master/7.2/stretch/fpm"
-ORIGINAL_INSTRUCTION="FROM debian:stretch-slim"
+DOCKER_BASE_URL="https://raw.githubusercontent.com/docker-library/php/master/8.1/buster/fpm/"
+ORIGINAL_INSTRUCTION="FROM debian:buster-slim"
 
 DOCKER_BUILD_FILES=( Dockerfile docker-php-entrypoint docker-php-ext-configure docker-php-ext-enable docker-php-ext-install docker-php-source)
 for FILE in "${DOCKER_BUILD_FILES[@]}"
@@ -46,7 +46,9 @@ sed -i "s|libcurl4-openssl-dev | |g" Dockerfile
 sed -i "s|libssl-dev | |g" Dockerfile
 
 # Enable new versions again after apt-get
+echo >> Dockerfile
+echo "# Enable new versions again after apt-get" >> Dockerfile
 echo "COPY --from=openssl-gost /usr/local/ssl/bin/openssl /usr/bin/openssl" >> Dockerfile
 echo "COPY --from=openssl-gost /usr/local/curl/bin/curl /usr/bin/curl" >> Dockerfile
 
-sed -i 's|GENERATED VIA "update.sh"|GENERATED VIA "update.sh" AND UPDATED VIA openssl-gost|g' Dockerfile
+sed -i 's|GENERATED VIA "apply-templates.sh"|GENERATED VIA "apply-templates.sh" AND UPDATED VIA openssl-gost|g' Dockerfile
