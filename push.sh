@@ -10,9 +10,9 @@ if [ "$VERSION" == '' ]; then
   exit 1
 fi
 
-docker tag openssl-gost-local "rnix/openssl-gost:$VERSION"
-docker tag openssl-gost-local "rnix/openssl-gost:latest"
-docker push "rnix/openssl-gost:$VERSION"
-docker push "rnix/openssl-gost:latest"
+docker tag openssl-gost-local "yesnik/openssl-gost:$VERSION"
+docker tag openssl-gost-local "yesnik/openssl-gost:latest"
+docker push "yesnik/openssl-gost:$VERSION"
+docker push "yesnik/openssl-gost:latest"
 
 echo "Done."

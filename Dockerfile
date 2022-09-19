@@ -1,12 +1,12 @@
-FROM debian:stretch-slim
+FROM debian:bullseye-slim
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install build-essential wget git cmake unzip gcc -y
 
 ARG PREFIX="/usr/local/ssl"
 
 # Build openssl
-ARG OPENSSL_VERSION="OpenSSL_1_1_1g"
-ARG OPENSSL_SHA256="41bac751d85f89a7d821324b7ffb35526a310db014ab6a4fe17fddaa011b7024"
+ARG OPENSSL_VERSION="OpenSSL_1_1_1q"
+ARG OPENSSL_SHA256="df86e6adcff1c91a85cef139dd061ea40b7e49005e8be16522cf4864bfcf5eb8"
 RUN cd /usr/local/src \
   && wget "https://github.com/openssl/openssl/archive/${OPENSSL_VERSION}.zip" -O "${OPENSSL_VERSION}.zip" \
   && echo "$OPENSSL_SHA256" "${OPENSSL_VERSION}.zip" | sha256sum -c - \
@@ -22,8 +22,8 @@ RUN echo "${PREFIX}/lib" >> /etc/ld.so.conf.d/ssl.conf && ldconfig
 ARG ENGINES=${PREFIX}/lib/engines-3
 
 # Build GOST-engine for OpenSSL
-ARG GOST_ENGINE_VERSION=58a46b289d6b8df06072fc9c0304f4b2d3f4b051
-ARG GOST_ENGINE_SHA256="6b47e24ee1ce619557c039fc0c1201500963f8f8dea83cad6d05d05b3dcc2255"
+ARG GOST_ENGINE_VERSION=739f957615eb33a33a6485ae7cf29c7c679fd59a
+ARG GOST_ENGINE_SHA256="99e047a239b374b62edd5e543cd76ac15f85b58adadc18f59f962e65008d126d"
 RUN cd /usr/local/src \
   && wget "https://github.com/gost-engine/engine/archive/${GOST_ENGINE_VERSION}.zip" -O gost-engine.zip \
   && echo "$GOST_ENGINE_SHA256" gost-engine.zip | sha256sum -c - \
@@ -60,8 +60,8 @@ RUN sed -i '6i openssl_conf=openssl_def' ${PREFIX}/openssl.cnf \
   && echo "CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet" >>${PREFIX}/openssl.cnf
 
 # Rebuild curl
-ARG CURL_VERSION=7.69.1
-ARG CURL_SHA256="01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98"
+ARG CURL_VERSION=7.85.0
+ARG CURL_SHA256="78a06f918bd5fde3c4573ef4f9806f56372b32ec1829c9ec474799eeee641c27"
 RUN apt-get remove curl -y \
   && rm -rf /usr/local/include/curl \
   && cd /usr/local/src \
@@ -77,8 +77,8 @@ RUN apt-get remove curl -y \
   && rm -rf "/usr/local/src/curl-${CURL_VERSION}.tar.gz" "/usr/local/src/curl-${CURL_VERSION}" 
 
 # Rebuild stunnel
-ARG STUNNEL_VERSION=5.60
-ARG STUNNEL_SHA256="c45d765b1521861fea9b03b425b9dd7d48b3055128c0aec673bba5ef9b8f787d"
+ARG STUNNEL_VERSION=5.66
+ARG STUNNEL_SHA256="558178704d1aa5f6883aac6cc5d6bbf2a5714c8a0d2e91da0392468cee9f579c"
 RUN cd /usr/local/src \
   && wget "https://www.stunnel.org/downloads/stunnel-${STUNNEL_VERSION}.tar.gz" -O "stunnel-${STUNNEL_VERSION}.tar.gz" \
   && echo "$STUNNEL_SHA256" "stunnel-${STUNNEL_VERSION}.tar.gz" | sha256sum -c - \
