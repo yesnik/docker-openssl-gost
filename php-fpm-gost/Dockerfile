@@ -4,9 +4,9 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM rnix/openssl-gost AS openssl-gost
+FROM yesnik/openssl-gost AS openssl-gost
 
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 COPY --from=openssl-gost /usr/local/ssl /usr/local/ssl
 COPY --from=openssl-gost /usr/local/ssl/bin/openssl /usr/bin/openssl

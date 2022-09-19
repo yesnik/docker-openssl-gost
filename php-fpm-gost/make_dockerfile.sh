@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOCKER_BASE_URL="https://raw.githubusercontent.com/docker-library/php/master/8.1/buster/fpm/"
-ORIGINAL_INSTRUCTION="FROM debian:buster-slim"
+DOCKER_BASE_URL="https://raw.githubusercontent.com/docker-library/php/master/8.1/bullseye/fpm/"
+ORIGINAL_INSTRUCTION="FROM debian:bullseye-slim"
 
 DOCKER_BUILD_FILES=( Dockerfile docker-php-entrypoint docker-php-ext-configure docker-php-ext-enable docker-php-ext-install docker-php-source)
 for FILE in "${DOCKER_BUILD_FILES[@]}"
@@ -10,7 +10,7 @@ do
 done
 
 STAGE_INSTRUCTIONS=$(cat << END
-FROM rnix/openssl-gost AS openssl-gost
+FROM yesnik/openssl-gost AS openssl-gost
 
 ${ORIGINAL_INSTRUCTION}
 
